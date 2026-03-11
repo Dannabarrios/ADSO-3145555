@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<title>Diagramas BD — Cafeteria SENA</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Space Grotesk',sans-serif;background:#0f1117;min-height:100vh;padding:24px;}
+h1{text-align:center;color:#fff;font-size:1.6rem;font-weight:700;margin-bottom:4px;letter-spacing:-0.5px;}
+.sub{text-align:center;color:#64748b;margin-bottom:20px;font-size:.85rem;font-family:'JetBrains Mono',monospace;}
+.tabs{display:flex;justify-content:center;gap:8px;margin-bottom:20px;}
+.tab{padding:8px 24px;border-radius:6px;border:1.5px solid #334155;background:transparent;color:#94a3b8;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-size:.85rem;transition:all .2s;}
+.tab.active{background:#3b82f6;border-color:#3b82f6;color:#fff;}
+.pane{display:none;overflow-x:auto;background:#1e2533;border-radius:12px;border:1px solid #2d3748;padding:16px;}
+.pane.active{display:block;}
+</style>
+</head>
+<body>
+<h1>Diagramas de Base de Datos</h1>
+<p class="sub">// Sistema Cafeteria SENA — 21 tablas / 5 módulos</p>
+<div class="tabs">
+  <button class="tab active" onclick="sw('mer',this)">MER</button>
+  <button class="tab"        onclick="sw('er', this)">ER — Notación Chen</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     MER  —  5 columnas de módulos, filas internas por módulo
+     Colores: Parameter=#06b6d4  Security=#3b82f6  Inventory=#f59e0b
+              Sales=#10b981      Billing=#8b5cf6
+══════════════════════════════════════════════════════════════════════ -->
+<div class="pane active" id="mer">
+<svg width="1600" height="980" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <style>
+    text{font-family:'Space Grotesk',sans-serif;}
+    .hdr{font-size:11px;font-weight:700;fill:#fff;}
+    .fld{font-size:10px;fill:#cbd5e1;}
+    .fk{font-size:10px;fill:#f87171;}
+    .pk{font-size:10px;fill:#fbbf24;}
+    .mod{font-size:10px;font-weight:700;}
+    .rel{font-size:11px;font-weight:700;}
+  </style>
+</defs>
+<rect width="1600" height="980" fill="#0f1117"/>
+<text x="800" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#f1f5f9">Modelo Entidad-Relación (MER) — Cafeteria SENA</text>
+
+<!-- ── MODULE LABELS ── -->
+<!-- Parameter -->
+<rect x="16" y="44" width="230" height="420" rx="8" fill="#083344" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="5,3"/>
+<text x="131" y="62" text-anchor="middle" class="mod" fill="#06b6d4">PARAMETER</text>
+<!-- Security -->
+<rect x="258" y="44" width="370" height="820" rx="8" fill="#0d1b3e" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="5,3"/>
+<text x="443" y="62" text-anchor="middle" class="mod" fill="#3b82f6">SECURITY</text>
+<!-- Inventory -->
+<rect x="640" y="44" width="280" height="420" rx="8" fill="#1c1108" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5,3"/>
+<text x="780" y="62" text-anchor="middle" class="mod" fill="#f59e0b">INVENTORY</text>
+<!-- Sales -->
+<rect x="934" y="44" width="330" height="420" rx="8" fill="#051f16" stroke="#10b981" stroke-width="1.5" stroke-dasharray="5,3"/>
+<text x="1099" y="62" text-anchor="middle" class="mod" fill="#10b981">SALES</text>
+<!-- Billing -->
+<rect x="1278" y="44" width="306" height="820" rx="8" fill="#1a0e2e" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5,3"/>
+<text x="1431" y="62" text-anchor="middle" class="mod" fill="#8b5cf6">BILLING</text>
+
+<!-- ════════════════════════ PARAMETER ════════════════════════ -->
+<!-- TYPE_DOCUMENT x=26 y=72 w=210 -->
+<rect x="26" y="72" width="210" height="108" rx="5" fill="#0e7490" stroke="#06b6d4" stroke-width="1.5"/>
+<rect x="26" y="72" width="210" height="26" rx="5" fill="#06b6d4"/>
+<text x="131" y="89" text-anchor="middle" class="hdr">TYPE_DOCUMENT</text>
+<line x1="26" y1="98" x2="236" y2="98" stroke="#06b6d4" stroke-width="1"/>
+<text x="36" y="113" class="pk">id : Long (PK)</text>
+<text x="36" y="128" class="fld">code : String</text>
+<text x="36" y="143" class="fld">name : String</text>
+<text x="36" y="158" class="fld">description : String</text>
+<text x="36" y="170" class="fld" font-size="9" fill="#64748b">+ audit fields</text>
+
+<!-- PERSON x=26 y=196 w=210 -->
+<rect x="26" y="196" width="210" height="140" rx="5" fill="#0e7490" stroke="#06b6d4" stroke-width="1.5"/>
+<rect x="26" y="196" width="210" height="26" rx="5" fill="#06b6d4"/>
+<text x="131" y="213" text-anchor="middle" class="hdr">PERSON</text>
+<line x1="26" y1="222" x2="236" y2="222" stroke="#06b6d4" stroke-width="1"/>
+<text x="36" y="237" class="pk">id : Long (PK)</text>
+<text x="36" y="252" class="fld">first_name : String</text>
+<text x="36" y="267" class="fld">last_name : String</text>
+<text x="36" y="282" class="fld">email : String</text>
+<text x="36" y="297" class="fld">phone : String</text>
+<text x="36" y="312" class="fk">type_document_id (FK)</text>
+<text x="36" y="327" class="fld">document_number : String</text>
+
+<!-- FILE x=26 y=352 w=210 -->
+<rect x="26" y="352" width="210" height="108" rx="5" fill="#0e7490" stroke="#06b6d4" stroke-width="1.5"/>
+<rect x="26" y="352" width="210" height="26" rx="5" fill="#06b6d4"/>
+<text x="131" y="369" text-anchor="middle" class="hdr">FILE</text>
+<line x1="26" y1="378" x2="236" y2="378" stroke="#06b6d4" stroke-width="1"/>
+<text x="36" y="393" class="pk">id : Long (PK)</text>
+<text x="36" y="408" class="fld">name : String</text>
+<text x="36" y="423" class="fld">path : String</text>
+<text x="36" y="438" class="fld">mime_type : String</text>
+<text x="36" y="453" class="fk">person_id (FK)</text>
+
+<!-- ════════════════════════ SECURITY ════════════════════════ -->
+<!-- ROLE x=268 y=72 -->
+<rect x="268" y="72" width="190" height="108" rx="5" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5"/>
+<rect x="268" y="72" width="190" height="26" rx="5" fill="#3b82f6"/>
+<text x="363" y="89" text-anchor="middle" class="hdr">ROLE</text>
+<line x1="268" y1="98" x2="458" y2="98" stroke="#3b82f6" stroke-width="1"/>
+<text x="278" y="113" class="pk">id : Long (PK)</text>
+<text x="278" y="128" class="fld">name : String</text>
+<text x="278" y="143" class="fld">description : String</text>
+<text x="278" y="158" class="fld" font-size="9" fill="#64748b">+ audit fields</text>
+
+<!-- USER x=472 y=72 -->
+<rect x="472" y="72" width="145" height="158" rx="5" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5"/>
+<rect x="472" y="72" width="145" height="26" rx="5" fill="#3b82f6"/>
+<text x="544" y="89" text-anchor="middle" class="hdr">USER</text>
+<line x1="472" y1="98" x2="617" y2="98" stroke="#3b82f6" stroke-width="1"/>
+<text x="482" y="113" class="pk">id : Long (PK)</text>
+<text x="482" y="128" class="fld">username : String</text>
+<text x="482" y="143" class="fld">password : String</text>
+<text x="482" y="158" class="fld">user_type : Enum</text>
+<text x="482" y="173" class="fld">ficha : String</text>
+<text x="482" y="188" class="fld">active : Boolean</text>
+<text x="482" y="203" class="fk">person_id (FK)</text>
+<text x="482" y="220" class="fld" font-size="9" fill="#64748b">+ audit fields</text>
+
+<!-- MODULE x=268 y=196 -->
+<rect x="268" y="196" width="190" height="128" rx="5" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5"/>
+<rect x="268" y="196" width="190" height="26" rx="5" fill="#3b82f6"/>
+<text x="363" y="213" text-anchor="middle" class="hdr">MODULE</text>
+<line x1="268" y1="222" x2="458" y2="222" stroke="#3b82f6" stroke-width="1"/>
+<text x="278" y="237" class="pk">id : Long (PK)</text>
+<text x="278" y="252" class="fld">name : String</text>
+<text x="278" y="267" class="fld">description : String</text>
+<text x="278" y="282" class="fld">icon : String</text>
+<text x="278" y="297" class="fld">route : String</text>
+<text x="278" y="315" class="fld" font-size="9" fill="#64748b">+ audit fields</text>
+
+<!-- VIEW x=472 y=248 -->
+<rect x="472" y="248" width="145" height="108" rx="5" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5"/>
+<rect x="472" y="248" width="145" height="26" rx="5" fill="#3b82f6"/>
+<text x="544" y="265" text-anchor="middle" class="hdr">VIEW</text>
+<line x1="472" y1="274" x2="617" y2="274" stroke="#3b82f6" stroke-width="1"/>
+<text x="482" y="289" class="pk">id : Long (PK)</text>
+<text x="482" y="304" class="fld">name : String</text>
+<text x="482" y="319" class="fld">route : String</text>
+<text x="482" y="334" class="fk">module_id (FK)</text>
+<text x="482" y="346" class="fld" font-size="9" fill="#64748b">+ audit fields</text>
+
+<!-- USER_ROLE x=268 y=480 -->
+<rect x="268" y="480" width="190" height="90" rx="5" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5"/>
+<rect x="268" y="480" width="190" height="26" rx="5" fill="#3b82f6"/>
+<text x="363" y="497" text-anchor="middle" class="hdr">USER_ROLE</text>
+<line x1="268" y1="506" x2="458" y2="506" stroke="#3b82f6" stroke-width="1"/>
+<text x="278" y="521" class="pk">id : Long (PK)</text>
+<text x="278" y="536" class="fk">user_id (FK)</text>
+<text x="278" y="551" class="fk">role_id (FK)</text>
+<text x="278" y="563" class="fld" font-size="9" fill="#64748b">+ audit fields</text>
+
+<!-- ROLE_MODULE x=268 y=590 -->
+<rect x="268" y="590" width="190" height="90" rx="5" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5"/>
+<rect x="268" y="590" width="190" height="26" rx="5" fill="#3b82f6"/>
+<text x="363" y="607" text-anchor="middle" class="hdr">ROLE_MODULE</text>
+<line x1="268" y1="616" x2="458" y2="616" stroke="#3b82f6" stroke-width="1"/>
+<text x="278" y="631" class="pk">id : Long (PK)</text>
+<text x="278" y="646" class="fk">role_id (FK)</text>
+<text x="278" y="661" class="fk">module_id (FK)</text>
+<text x="278" y="673" class="fld" font-size="9" fill="#64748b">+ audit fields</text>
+
+<!-- MODULE_VIEW x=268 y=700 -->
+<rect x="268" y="700" width="190" height="90" rx="5" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5"/>
+<rect x="268" y="700" width="190" height="26" rx="5" fill="#3b82f6"/>
+<text x="363" y="717" text-anchor="middle" class="hdr">MODULE_VIEW</text>
+<line x1="268" y1="726" x2="458" y2="726" stroke="#3b82f6" stroke-width="1"/>
+<text x="278" y="741" class="pk">id : Long (PK)</text>
+<text x="278" y="756" class="fk">module_id (FK)</text>
+<text x="278" y="771" class="fk">view_id (FK)</text>
+<text x="278" y="783" class="fld" font-size="9" fill="#64748b">+ audit fields</text>
+
+<!-- ════════════════════════ INVENTORY ════════════════════════ -->
+<!-- CATEGORY x=650 y=72 -->
+<rect x="650" y="72" width="255" height="108" rx="5" fill="#451a03" stroke="#f59e0b" stroke-width="1.5"/>
+<rect x="650" y="72" width="255" height="26" rx="5" fill="#f59e0b"/>
+<text x="777" y="89" text-anchor="middle" class="hdr" fill="#000">CATEGORY</text>
+<line x1="650" y1="98" x2="905" y2="98" stroke="#f59e0b" stroke-width="1"/>
+<text x="660" y="113" class="pk">id : Long (PK)</text>
+<text x="660" y="128" class="fld">name : String</text>
+<text x="660" y="143" class="fld">description : String</text>
+<text x="660" y="158" class="fld" font-size="9" fill="#64748b">+ audit fields</text>
+
+<!-- SUPPLIER x=650 y=196 -->
+<rect x="650" y="196" width="255" height="128" rx="5" fill="#451a03" stroke="#f59e0b" stroke-width="1.5"/>
+<rect x="650" y="196" width="255" height="26" rx="5" fill="#f59e0b"/>
+<text x="777" y="213" text-anchor="middle" class="hdr" fill="#000">SUPPLIER</text>
+<line x1="650" y1="222" x2="905" y2="222" stroke="#f59e0b" stroke-width="1"/>
+<text x="660" y="237" class="pk">id : Long (PK)</text>
+<text x="660" y="252" class="fld">name : String</text>
+<text x="660" y="267" class="fld">email : String</text>
+<text x="660" y="282" class="fld">phone : String</text>
+<text x="660" y="297" class="fld">nit : String</text>
+<text x="660" y="315" class="fld" font-size="9" fill="#64748b">+ audit fields</text>
+
+<!-- PRODUCT x=650 y=340 -->
+<rect x="650" y="340" width="255" height="143" rx="5" fill="#451a03" stroke="#f59e0b" stroke-width="1.5"/>
+<rect x="650" y="340" width="255" height="26" rx="5" fill="#f59e0b"/>
+<text x="777" y="357" text-anchor="middle" class="hdr" fill="#000">PRODUCT</text>
+<line x1="650" y1="366" x2="905" y2="366" stroke="#f59e0b" stroke-width="1"/>
+<text x="660" y="381" class="pk">id : Long (PK)</text>
+<text x="660" y="396" class="fld">name : String</text>
+<text x="660" y="411" class="fld">price : BigDecimal</text>
+<text x="660" y="426" class="fld">stock : Integer</text>
+<text x="660" y="441" class="fld">available : Boolean</text>
+<text x="660" y="456" class="fk">category_id (FK)</text>
+<text x="660" y="471" class="fk">supplier_id (FK)</text>
+
+<!-- INVENTORY x=650 y=500 -->
+<rect x="650" y="500" width="255" height="108" rx="5" fill="#451a03" stroke="#f59e0b" stroke-width="1.5"/>
+<rect x="650" y="500" width="255" height="26" rx="5" fill="#f59e0b"/>
+<text x="777" y="517" text-anchor="middle" class="hdr" fill="#000">INVENTORY</text>
+<line x1="650" y1="526" x2="905" y2="526" stroke="#f59e0b" stroke-width="1"/>
+<text x="660" y="541" class="pk">id : Long (PK)</text>
+<text x="660" y="556" class="fk">product_id (FK)</text>
+<text x="660" y="571" class="fld">stock : Integer</text>
+<text x="660" y="586" class="fld">min_stock / max_stock</text>
+<text x="660" y="598" class="fld" font-size="9" fill="#64748b">+ audit fields</text>
+
+<!-- ════════════════════════ SALES ════════════════════════ -->
+<!-- CUSTOMER x=944 y=72 -->
+<rect x="944" y="72" width="304" height="108" rx="5" fill="#022c22" stroke="#10b981" stroke-width="1.5"/>
+<rect x="944" y="72" width="304" height="26" rx="5" fill="#10b981"/>
+<text x="1096" y="89" text-anchor="middle" class="hdr">CUSTOMER</text>
+<line x1="944" y1="98" x2="1248" y2="98" stroke="#10b981" stroke-width="1"/>
+<text x="954" y="113" class="pk">id : Long (PK)</text>
+<text x="954" y="128" class="fk">person_id (FK)</text>
+<text x="954" y="143" class="fld">loyalty_points : Integer</text>
+<text x="954" y="158" class="fld" font-size="9" fill="#64748b">+ audit fields</text>
+
+<!-- ORDER x=944 y=196 -->
+<rect x="944" y="196" width="304" height="158" rx="5" fill="#022c22" stroke="#10b981" stroke-width="1.5"/>
+<rect x="944" y="196" width="304" height="26" rx="5" fill="#10b981"/>
+<text x="1096" y="213" text-anchor="middle" class="hdr">ORDER</text>
+<line x1="944" y1="222" x2="1248" y2="222" stroke="#10b981" stroke-width="1"/>
+<text x="954" y="237" class="pk">id : Long (PK)</text>
+<text x="954" y="252" class="fk">customer_id (FK)</text>
+<text x="954" y="267" class="fk">user_id (FK)</text>
+<text x="954" y="282" class="fld">order_date : LocalDateTime</text>
+<text x="954" y="297" class="fld">order_status : Enum</text>
+<text x="954" y="312" class="fld">total : BigDecimal</text>
+<text x="954" y="327" class="fld">notes : String</text>
+<text x="954" y="343" class="fld" font-size="9" fill="#64748b">+ audit fields</text>
+
+<!-- ORDER_ITEM x=944 y=370 -->
+<rect x="944" y="370" width="304" height="108" rx="5" fill="#022c22" stroke="#10b981" stroke-width="1.5"/>
+<rect x="944" y="370" width="304" height="26" rx="5" fill="#10b981"/>
+<text x="1096" y="387" text-anchor="middle" class="hdr">ORDER_ITEM</text>
+<line x1="944" y1="396" x2="1248" y2="396" stroke="#10b981" stroke-width="1"/>
+<text x="954" y="411" class="pk">id : Long (PK)</text>
+<text x="954" y="426" class="fk">order_id (FK)</text>
+<text x="954" y="441" class="fk">product_id (FK)</text>
+<text x="954" y="456" class="fld">quantity / unit_price / subtotal</text>
+<text x="954" y="468" class="fld" font-size="9" fill="#64748b">+ audit fields</text>
+
+<!-- ════════════════════════ BILLING ════════════════════════ -->
+<!-- METHOD_PAYMENT x=1288 y=72 -->
+<rect x="1288" y="72" width="280" height="108" rx="5" fill="#1e0a3c" stroke="#8b5cf6" stroke-width="1.5"/>
+<rect x="1288" y="72" width="280" height="26" rx="5" fill="#8b5cf6"/>
+<text x="1428" y="89" text-anchor="middle" class="hdr">METHOD_PAYMENT</text>
+<line x1="1288" y1="98" x2="1568" y2="98" stroke="#8b5cf6" stroke-width="1"/>
+<text x="1298" y="113" class="pk">id : Long (PK)</text>
+<text x="1298" y="128" class="fld">name : String</text>
+<text x="1298" y="143" class="fld">description : String</text>
+<text x="1298" y="158" class="fld" font-size="9" fill="#64748b">+ audit fields</text>
+
+<!-- INVOICE x=1288 y=196 -->
+<rect x="1288" y="196" width="280" height="143" rx="5" fill="#1e0a3c" stroke="#8b5cf6" stroke-width="1.5"/>
+<rect x="1288" y="196" width="280" height="26" rx="5" fill="#8b5cf6"/>
+<text x="1428" y="213" text-anchor="middle" class="hdr">INVOICE</text>
+<line x1="1288" y1="222" x2="1568" y2="222" stroke="#8b5cf6" stroke-width="1"/>
+<text x="1298" y="237" class="pk">id : Long (PK)</text>
+<text x="1298" y="252" class="fk">order_id (FK)</text>
+<text x="1298" y="267" class="fld">invoice_number : String</text>
+<text x="1298" y="282" class="fld">subtotal : BigDecimal</text>
+<text x="1298" y="297" class="fld">tax : BigDecimal</text>
+<text x="1298" y="312" class="fld">total : BigDecimal</text>
+<text x="1298" y="330" class="fld" font-size="9" fill="#64748b">+ audit fields</text>
+
+<!-- INVOICE_ITEM x=1288 y=356 -->
+<rect x="1288" y="356" width="280" height="108" rx="5" fill="#1e0a3c" stroke="#8b5cf6" stroke-width="1.5"/>
+<rect x="1288" y="356" width="280" height="26" rx="5" fill="#8b5cf6"/>
+<text x="1428" y="373" text-anchor="middle" class="hdr">INVOICE_ITEM</text>
+<line x1="1288" y1="382" x2="1568" y2="382" stroke="#8b5cf6" stroke-width="1"/>
+<text x="1298" y="397" class="pk">id : Long (PK)</text>
+<text x="1298" y="412" class="fk">invoice_id (FK)</text>
+<text x="1298" y="427" class="fk">product_id (FK)</text>
+<text x="1298" y="442" class="fld">quantity / unit_price / subtotal</text>
+<text x="1298" y="454" class="fld" font-size="9" fill="#64748b">+ audit fields</text>
+
+<!-- PAYMENT x=1288 y=480 -->
+<rect x="1288" y="480" width="280" height="108" rx="5" fill="#1e0a3c" stroke="#8b5cf6" stroke-width="1.5"/>
+<rect x="1288" y="480" width="280" height="26" rx="5" fill="#8b5cf6"/>
+<text x="1428" y="497" text-anchor="middle" class="hdr">PAYMENT</text>
+<line x1="1288" y1="506" x2="1568" y2="506" stroke="#8b5cf6" stroke-width="1"/>
+<text x="1298" y="521" class="pk">id : Long (PK)</text>
+<text x="1298" y="536" class="fk">invoice_id (FK)</text>
+<text x="1298" y="551" class="fk">method_payment_id (FK)</text>
+<text x="1298" y="566" class="fld">amount / payment_date</text>
+<text x="1298" y="578" class="fld" font-size="9" fill="#64748b">+ audit fields</text>
+
+<!-- ════════ RELACIONES ════════ -->
+<!-- TYPE_DOCUMENT 1─N PERSON -->
+<line x1="131" y1="180" x2="131" y2="196" stroke="#06b6d4" stroke-width="1.5"/>
+<text x="136" y="190" class="rel" fill="#06b6d4">1:N</text>
+<!-- PERSON 1─1 FILE -->
+<line x1="131" y1="336" x2="131" y2="352" stroke="#06b6d4" stroke-width="1.5"/>
+<text x="136" y="346" class="rel" fill="#06b6d4">1:N</text>
+<!-- PERSON 1─1 USER -->
+<line x1="236" y1="270" x2="472" y2="150" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="340" y="196" class="rel" fill="#3b82f6">1:1</text>
+<!-- ROLE 1─N USER_ROLE -->
+<line x1="363" y1="180" x2="363" y2="480" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="368" y="340" class="rel" fill="#3b82f6">1:N</text>
+<!-- USER 1─N USER_ROLE -->
+<line x1="544" y1="230" x2="458" y2="510" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="510" y="370" class="rel" fill="#3b82f6">1:N</text>
+<!-- ROLE 1─N ROLE_MODULE -->
+<line x1="363" y1="180" x2="363" y2="590" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,2"/>
+<!-- MODULE 1─N ROLE_MODULE -->
+<line x1="363" y1="324" x2="363" y2="590" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,2"/>
+<!-- MODULE 1─N MODULE_VIEW -->
+<line x1="363" y1="324" x2="363" y2="700" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,2"/>
+<!-- VIEW MODULE_VIEW -->
+<line x1="544" y1="356" x2="458" y2="730" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,2"/>
+<!-- CATEGORY 1─N PRODUCT -->
+<line x1="777" y1="180" x2="777" y2="340" stroke="#f59e0b" stroke-width="1.5"/>
+<text x="782" y="265" class="rel" fill="#f59e0b">1:N</text>
+<!-- SUPPLIER 1─N PRODUCT -->
+<line x1="850" y1="324" x2="850" y2="340" stroke="#f59e0b" stroke-width="1.5"/>
+<text x="855" y="334" class="rel" fill="#f59e0b">1:N</text>
+<!-- PRODUCT 1─N INVENTORY -->
+<line x1="777" y1="483" x2="777" y2="500" stroke="#f59e0b" stroke-width="1.5"/>
+<text x="782" y="494" class="rel" fill="#f59e0b">1:1</text>
+<!-- PERSON 1─N CUSTOMER -->
+<line x1="236" y1="300" x2="944" y2="126" stroke="#10b981" stroke-width="1.5"/>
+<text x="580" y="195" class="rel" fill="#10b981">1:N</text>
+<!-- CUSTOMER 1─N ORDER -->
+<line x1="1096" y1="180" x2="1096" y2="196" stroke="#10b981" stroke-width="1.5"/>
+<text x="1101" y="190" class="rel" fill="#10b981">1:N</text>
+<!-- USER 1─N ORDER -->
+<line x1="617" y1="155" x2="944" y2="260" stroke="#10b981" stroke-width="1.5"/>
+<text x="780" y="195" class="rel" fill="#10b981">1:N</text>
+<!-- ORDER 1─N ORDER_ITEM -->
+<line x1="1096" y1="354" x2="1096" y2="370" stroke="#10b981" stroke-width="1.5"/>
+<text x="1101" y="364" class="rel" fill="#10b981">1:N</text>
+<!-- PRODUCT 1─N ORDER_ITEM -->
+<line x1="905" y1="420" x2="944" y2="430" stroke="#10b981" stroke-width="1.5"/>
+<text x="910" y="418" class="rel" fill="#10b981">1:N</text>
+<!-- ORDER 1─1 INVOICE -->
+<line x1="1248" y1="270" x2="1288" y2="270" stroke="#8b5cf6" stroke-width="1.5"/>
+<text x="1253" y="263" class="rel" fill="#8b5cf6">1:1</text>
+<!-- INVOICE 1─N INVOICE_ITEM -->
+<line x1="1428" y1="339" x2="1428" y2="356" stroke="#8b5cf6" stroke-width="1.5"/>
+<text x="1433" y="350" class="rel" fill="#8b5cf6">1:N</text>
+<!-- INVOICE 1─N PAYMENT -->
+<line x1="1568" y1="290" x2="1580" y2="290" stroke="#8b5cf6" stroke-width="1.5"/>
+<line x1="1580" y1="290" x2="1580" y2="534" stroke="#8b5cf6" stroke-width="1.5"/>
+<line x1="1568" y1="534" x2="1580" y2="534" stroke="#8b5cf6" stroke-width="1.5"/>
+<text x="1553" y="415" class="rel" fill="#8b5cf6">1:N</text>
+<!-- METHOD_PAYMENT 1─N PAYMENT -->
+<line x1="1428" y1="180" x2="1428" y2="480" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="4,2"/>
+<!-- PRODUCT 1─N INVOICE_ITEM -->
+<line x1="905" y1="390" x2="1288" y2="412" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+<!-- ════════ LEGEND ════════ -->
+<rect x="16" y="860" width="1568" height="108" rx="8" fill="#1e2533" stroke="#334155" stroke-width="1"/>
+<text x="800" y="882" text-anchor="middle" font-size="11" font-weight="bold" fill="#f1f5f9">Leyenda</text>
+<line x1="16" y1="890" x2="1584" y2="890" stroke="#334155" stroke-width="1"/>
+<text x="36" y="908" font-size="10" fill="#fbbf24">■ PK</text><text x="60" y="908" font-size="10" fill="#94a3b8">= Primary Key</text>
+<text x="200" y="908" font-size="10" fill="#f87171">■ FK</text><text x="224" y="908" font-size="10" fill="#94a3b8">= Foreign Key</text>
+<text x="380" y="908" font-size="10" fill="#94a3b8">1:1 = uno a uno   1:N = uno a muchos   N:M = muchos a muchos (tabla intermedia)</text>
+<text x="36" y="928" font-size="10" fill="#94a3b8">audit fields = created_at, updated_at, deleted_at, created_by, updated_by, deleted_by, status</text>
+<rect x="900" y="898" width="12" height="12" rx="2" fill="#06b6d4"/><text x="916" y="909" font-size="10" fill="#94a3b8">Parameter</text>
+<rect x="1000" y="898" width="12" height="12" rx="2" fill="#3b82f6"/><text x="1016" y="909" font-size="10" fill="#94a3b8">Security</text>
+<rect x="1090" y="898" width="12" height="12" rx="2" fill="#f59e0b"/><text x="1106" y="909" font-size="10" fill="#94a3b8">Inventory</text>
+<rect x="1190" y="898" width="12" height="12" rx="2" fill="#10b981"/><text x="1206" y="909" font-size="10" fill="#94a3b8">Sales</text>
+<rect x="1270" y="898" width="12" height="12" rx="2" fill="#8b5cf6"/><text x="1286" y="909" font-size="10" fill="#94a3b8">Billing</text>
+</svg>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     ER — Notación Chen
+     Grid limpio 6 cols × 4 filas. Atributos solo arriba/abajo.
+══════════════════════════════════════════════════════════════════════ -->
+<div class="pane" id="er">
+<svg width="1600" height="920" xmlns="http://www.w3.org/2000/svg">
+<defs><style>
+  text{font-family:'Space Grotesk',sans-serif;}
+  .en{font-size:12px;font-weight:700;fill:#1e293b;}
+  .at{font-size:9px;fill:#334155;}
+  .re{font-size:10px;font-weight:700;}
+  .ca{font-size:12px;font-weight:800;}
+</style></defs>
+<rect width="1600" height="920" fill="#0f1117"/>
+<text x="800" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#f1f5f9">Diagrama Entidad-Relación (ER) — Notación Chen — Cafeteria SENA</text>
+
+<!-- ╔══ MACROS helpers ══╗
+  Entidad:  rect 150×36
+  Rombo:    polygon ±46 ±18
+  Atributo: ellipse rx=48 ry=15
+
+  FILA 1 (cy=120): TYPE_DOC · [tiene_td] · PERSON · [es_cliente] · CUSTOMER · [realiza] · ORDER · [genera] · INVOICE
+  FILA 2 (cy=300): FILE      · [asigna]  · ROLE   · [tiene_rm]  · MODULE   · [contiene]· VIEW  · [incluye]· INVOICE_ITEM
+  FILA 3 (cy=480): SUPPLIER  · [provee]  · PRODUCT· [tiene_inv] · INVENTORY· [aparece] ·ORDER_ITEM·[paga] · PAYMENT
+  FILA 4 (cy=660): CATEGORY  · [clasifica]        · USER        · [tiene_ur]· USER_ROLE · [usa] · MODULE_VIEW · METHOD_PAYMENT
+-->
+
+<!-- ══ FILA 1 ══ -->
+<!-- TYPE_DOCUMENT -->
+<rect x="20" y="102" width="150" height="36" rx="4" fill="#06b6d4" stroke="#0891b2" stroke-width="2"/>
+<text x="95" y="124" text-anchor="middle" class="en">TYPE_DOCUMENT</text>
+<!-- attrs arriba -->
+<ellipse cx="50" cy="60" rx="38" ry="15" fill="#083344" stroke="#06b6d4" stroke-width="1.2"/>
+<text x="50" y="64" text-anchor="middle" class="at" fill="#a5f3fc">id(PK)</text>
+<line x1="62" y1="74" x2="75" y2="102" stroke="#06b6d4" stroke-width="1" stroke-dasharray="3,2"/>
+<ellipse cx="150" cy="60" rx="38" ry="15" fill="#083344" stroke="#06b6d4" stroke-width="1.2"/>
+<text x="150" y="64" text-anchor="middle" class="at" fill="#a5f3fc">code</text>
+<line x1="148" y1="75" x2="140" y2="102" stroke="#06b6d4" stroke-width="1" stroke-dasharray="3,2"/>
+
+<!-- [tiene_td] -->
+<polygon points="260,120 306,120 283,102 283,138" fill="#0f1117" stroke="#06b6d4" stroke-width="2"/>
+<text x="283" y="124" text-anchor="middle" class="re" fill="#06b6d4">tiene</text>
+<line x1="170" y1="120" x2="260" y2="120" stroke="#06b6d4" stroke-width="1.8"/>
+<text x="188" y="113" class="ca" fill="#06b6d4">1</text>
+<line x1="306" y1="120" x2="360" y2="120" stroke="#06b6d4" stroke-width="1.8"/>
+<text x="340" y="113" class="ca" fill="#06b6d4">N</text>
+
+<!-- PERSON -->
+<rect x="360" y="102" width="150" height="36" rx="4" fill="#3b82f6" stroke="#2563eb" stroke-width="2"/>
+<text x="435" y="124" text-anchor="middle" class="en">PERSON</text>
+<!-- attrs arriba -->
+<ellipse cx="380" cy="60" rx="38" ry="15" fill="#0d1b3e" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="380" y="64" text-anchor="middle" class="at" fill="#bfdbfe">id(PK)</text>
+<line x1="390" y1="75" x2="400" y2="102" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,2"/>
+<ellipse cx="490" cy="60" rx="48" ry="15" fill="#0d1b3e" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="490" y="64" text-anchor="middle" class="at" fill="#bfdbfe">first_name</text>
+<line x1="480" y1="75" x2="465" y2="102" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,2"/>
+
+<!-- [es_cliente] -->
+<polygon points="600,120 646,120 623,102 623,138" fill="#0f1117" stroke="#10b981" stroke-width="2"/>
+<text x="623" y="124" text-anchor="middle" class="re" fill="#10b981">es</text>
+<line x1="510" y1="120" x2="600" y2="120" stroke="#10b981" stroke-width="1.8"/>
+<text x="528" y="113" class="ca" fill="#10b981">1</text>
+<line x1="646" y1="120" x2="700" y2="120" stroke="#10b981" stroke-width="1.8"/>
+<text x="680" y="113" class="ca" fill="#10b981">1</text>
+
+<!-- CUSTOMER -->
+<rect x="700" y="102" width="150" height="36" rx="4" fill="#10b981" stroke="#059669" stroke-width="2"/>
+<text x="775" y="124" text-anchor="middle" class="en">CUSTOMER</text>
+<ellipse cx="720" cy="60" rx="48" ry="15" fill="#022c22" stroke="#10b981" stroke-width="1.2"/>
+<text x="720" y="64" text-anchor="middle" class="at" fill="#a7f3d0">loyalty_pts</text>
+<line x1="730" y1="75" x2="745" y2="102" stroke="#10b981" stroke-width="1" stroke-dasharray="3,2"/>
+
+<!-- [realiza] -->
+<polygon points="940,120 986,120 963,102 963,138" fill="#0f1117" stroke="#10b981" stroke-width="2"/>
+<text x="963" y="124" text-anchor="middle" class="re" fill="#10b981">realiza</text>
+<line x1="850" y1="120" x2="940" y2="120" stroke="#10b981" stroke-width="1.8"/>
+<text x="868" y="113" class="ca" fill="#10b981">1</text>
+<line x1="986" y1="120" x2="1040" y2="120" stroke="#10b981" stroke-width="1.8"/>
+<text x="1020" y="113" class="ca" fill="#10b981">N</text>
+
+<!-- ORDER -->
+<rect x="1040" y="102" width="150" height="36" rx="4" fill="#10b981" stroke="#059669" stroke-width="2"/>
+<text x="1115" y="124" text-anchor="middle" class="en">ORDER</text>
+<ellipse cx="1070" cy="60" rx="38" ry="15" fill="#022c22" stroke="#10b981" stroke-width="1.2"/>
+<text x="1070" y="64" text-anchor="middle" class="at" fill="#a7f3d0">status</text>
+<line x1="1082" y1="75" x2="1090" y2="102" stroke="#10b981" stroke-width="1" stroke-dasharray="3,2"/>
+<ellipse cx="1175" cy="60" rx="38" ry="15" fill="#022c22" stroke="#10b981" stroke-width="1.2"/>
+<text x="1175" y="64" text-anchor="middle" class="at" fill="#a7f3d0">total</text>
+<line x1="1163" y1="75" x2="1150" y2="102" stroke="#10b981" stroke-width="1" stroke-dasharray="3,2"/>
+
+<!-- [genera] -->
+<polygon points="1280,120 1326,120 1303,102 1303,138" fill="#0f1117" stroke="#8b5cf6" stroke-width="2"/>
+<text x="1303" y="124" text-anchor="middle" class="re" fill="#8b5cf6">genera</text>
+<line x1="1190" y1="120" x2="1280" y2="120" stroke="#8b5cf6" stroke-width="1.8"/>
+<text x="1208" y="113" class="ca" fill="#8b5cf6">1</text>
+<line x1="1326" y1="120" x2="1380" y2="120" stroke="#8b5cf6" stroke-width="1.8"/>
+<text x="1360" y="113" class="ca" fill="#8b5cf6">1</text>
+
+<!-- INVOICE -->
+<rect x="1380" y="102" width="150" height="36" rx="4" fill="#8b5cf6" stroke="#7c3aed" stroke-width="2"/>
+<text x="1455" y="124" text-anchor="middle" class="en">INVOICE</text>
+<ellipse cx="1420" cy="60" rx="38" ry="15" fill="#1e0a3c" stroke="#8b5cf6" stroke-width="1.2"/>
+<text x="1420" y="64" text-anchor="middle" class="at" fill="#ddd6fe">inv_num</text>
+<line x1="1432" y1="75" x2="1438" y2="102" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="3,2"/>
+<ellipse cx="1530" cy="60" rx="38" ry="15" fill="#1e0a3c" stroke="#8b5cf6" stroke-width="1.2"/>
+<text x="1530" y="64" text-anchor="middle" class="at" fill="#ddd6fe">total</text>
+<line x1="1520" y1="75" x2="1500" y2="102" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="3,2"/>
+
+<!-- ══ FILA 2 ══ -->
+<!-- FILE -->
+<rect x="20" y="282" width="150" height="36" rx="4" fill="#06b6d4" stroke="#0891b2" stroke-width="2"/>
+<text x="95" y="304" text-anchor="middle" class="en">FILE</text>
+<ellipse cx="50" cy="340" rx="38" ry="15" fill="#083344" stroke="#06b6d4" stroke-width="1.2"/>
+<text x="50" y="344" text-anchor="middle" class="at" fill="#a5f3fc">name</text>
+<line x1="62" y1="326" x2="70" y2="318" stroke="#06b6d4" stroke-width="1" stroke-dasharray="3,2"/>
+<ellipse cx="150" cy="340" rx="42" ry="15" fill="#083344" stroke="#06b6d4" stroke-width="1.2"/>
+<text x="150" y="344" text-anchor="middle" class="at" fill="#a5f3fc">mime_type</text>
+<line x1="140" y1="326" x2="128" y2="318" stroke="#06b6d4" stroke-width="1" stroke-dasharray="3,2"/>
+<!-- PERSON─FILE vertical -->
+<line x1="95" y1="138" x2="95" y2="282" stroke="#06b6d4" stroke-width="1.8"/>
+<text x="100" y="215" class="ca" fill="#06b6d4">1</text>
+<text x="100" y="275" class="ca" fill="#06b6d4">N</text>
+
+<!-- ROLE -->
+<rect x="360" y="282" width="150" height="36" rx="4" fill="#3b82f6" stroke="#2563eb" stroke-width="2"/>
+<text x="435" y="304" text-anchor="middle" class="en">ROLE</text>
+<ellipse cx="380" cy="340" rx="38" ry="15" fill="#0d1b3e" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="380" y="344" text-anchor="middle" class="at" fill="#bfdbfe">id(PK)</text>
+<line x1="388" y1="326" x2="398" y2="318" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,2"/>
+<ellipse cx="490" cy="340" rx="38" ry="15" fill="#0d1b3e" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="490" y="344" text-anchor="middle" class="at" fill="#bfdbfe">name</text>
+<line x1="478" y1="326" x2="468" y2="318" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,2"/>
+
+<!-- [asigna_rm] rombo entre ROLE y MODULE -->
+<polygon points="600,300 646,300 623,282 623,318" fill="#0f1117" stroke="#3b82f6" stroke-width="2"/>
+<text x="623" y="304" text-anchor="middle" class="re" fill="#3b82f6">asigna</text>
+<line x1="510" y1="300" x2="600" y2="300" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="528" y="293" class="ca" fill="#3b82f6">N</text>
+<line x1="646" y1="300" x2="700" y2="300" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="680" y="293" class="ca" fill="#3b82f6">M</text>
+
+<!-- MODULE -->
+<rect x="700" y="282" width="150" height="36" rx="4" fill="#3b82f6" stroke="#2563eb" stroke-width="2"/>
+<text x="775" y="304" text-anchor="middle" class="en">MODULE</text>
+<ellipse cx="720" cy="340" rx="38" ry="15" fill="#0d1b3e" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="720" y="344" text-anchor="middle" class="at" fill="#bfdbfe">name</text>
+<line x1="730" y1="326" x2="740" y2="318" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,2"/>
+<ellipse cx="830" cy="340" rx="38" ry="15" fill="#0d1b3e" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="830" y="344" text-anchor="middle" class="at" fill="#bfdbfe">route</text>
+<line x1="820" y1="326" x2="810" y2="318" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,2"/>
+
+<!-- [contiene_v] -->
+<polygon points="940,300 986,300 963,282 963,318" fill="#0f1117" stroke="#3b82f6" stroke-width="2"/>
+<text x="963" y="304" text-anchor="middle" class="re" fill="#3b82f6">contiene</text>
+<line x1="850" y1="300" x2="940" y2="300" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="868" y="293" class="ca" fill="#3b82f6">1</text>
+<line x1="986" y1="300" x2="1040" y2="300" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="1020" y="293" class="ca" fill="#3b82f6">N</text>
+
+<!-- VIEW -->
+<rect x="1040" y="282" width="150" height="36" rx="4" fill="#3b82f6" stroke="#2563eb" stroke-width="2"/>
+<text x="1115" y="304" text-anchor="middle" class="en">VIEW</text>
+<ellipse cx="1075" cy="340" rx="38" ry="15" fill="#0d1b3e" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="1075" y="344" text-anchor="middle" class="at" fill="#bfdbfe">name</text>
+<line x1="1082" y1="326" x2="1088" y2="318" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,2"/>
+<ellipse cx="1185" cy="340" rx="38" ry="15" fill="#0d1b3e" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="1185" y="344" text-anchor="middle" class="at" fill="#bfdbfe">route</text>
+<line x1="1175" y1="326" x2="1158" y2="318" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,2"/>
+
+<!-- [incluye_ii] -->
+<polygon points="1280,300 1326,300 1303,282 1303,318" fill="#0f1117" stroke="#8b5cf6" stroke-width="2"/>
+<text x="1303" y="304" text-anchor="middle" class="re" fill="#8b5cf6">incluye</text>
+<line x1="1190" y1="300" x2="1280" y2="300" stroke="#8b5cf6" stroke-width="1.8"/>
+<!-- INVOICE vertical to fila2 -->
+<line x1="1455" y1="138" x2="1455" y2="282" stroke="#8b5cf6" stroke-width="1.8"/>
+<line x1="1326" y1="300" x2="1380" y2="300" stroke="#8b5cf6" stroke-width="1.8"/>
+<text x="1360" y="293" class="ca" fill="#8b5cf6">N</text>
+
+<!-- INVOICE_ITEM -->
+<rect x="1380" y="282" width="150" height="36" rx="4" fill="#8b5cf6" stroke="#7c3aed" stroke-width="2"/>
+<text x="1455" y="304" text-anchor="middle" class="en">INVOICE_ITEM</text>
+<ellipse cx="1420" cy="340" rx="42" ry="15" fill="#1e0a3c" stroke="#8b5cf6" stroke-width="1.2"/>
+<text x="1420" y="344" text-anchor="middle" class="at" fill="#ddd6fe">quantity</text>
+<line x1="1432" y1="326" x2="1438" y2="318" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="3,2"/>
+<ellipse cx="1538" cy="340" rx="42" ry="15" fill="#1e0a3c" stroke="#8b5cf6" stroke-width="1.2"/>
+<text x="1538" y="344" text-anchor="middle" class="at" fill="#ddd6fe">subtotal</text>
+<line x1="1525" y1="326" x2="1510" y2="318" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="3,2"/>
+
+<!-- ══ FILA 3 ══ -->
+<!-- SUPPLIER -->
+<rect x="20" y="462" width="150" height="36" rx="4" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+<text x="95" y="484" text-anchor="middle" class="en" fill="#000">SUPPLIER</text>
+<ellipse cx="50" cy="420" rx="38" ry="15" fill="#1c1108" stroke="#f59e0b" stroke-width="1.2"/>
+<text x="50" y="424" text-anchor="middle" class="at" fill="#fde68a">name</text>
+<line x1="58" y1="435" x2="68" y2="462" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3,2"/>
+<ellipse cx="156" cy="420" rx="38" ry="15" fill="#1c1108" stroke="#f59e0b" stroke-width="1.2"/>
+<text x="156" y="424" text-anchor="middle" class="at" fill="#fde68a">nit</text>
+<line x1="148" y1="435" x2="140" y2="462" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3,2"/>
+
+<!-- [provee] -->
+<polygon points="260,480 306,480 283,462 283,498" fill="#0f1117" stroke="#f59e0b" stroke-width="2"/>
+<text x="283" y="484" text-anchor="middle" class="re" fill="#f59e0b">provee</text>
+<line x1="170" y1="480" x2="260" y2="480" stroke="#f59e0b" stroke-width="1.8"/>
+<text x="188" y="473" class="ca" fill="#f59e0b">1</text>
+<line x1="306" y1="480" x2="360" y2="480" stroke="#f59e0b" stroke-width="1.8"/>
+<text x="340" y="473" class="ca" fill="#f59e0b">N</text>
+
+<!-- PRODUCT -->
+<rect x="360" y="462" width="150" height="36" rx="4" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+<text x="435" y="484" text-anchor="middle" class="en" fill="#000">PRODUCT</text>
+<ellipse cx="380" cy="420" rx="38" ry="15" fill="#1c1108" stroke="#f59e0b" stroke-width="1.2"/>
+<text x="380" y="424" text-anchor="middle" class="at" fill="#fde68a">price</text>
+<line x1="390" y1="435" x2="398" y2="462" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3,2"/>
+<ellipse cx="490" cy="420" rx="38" ry="15" fill="#1c1108" stroke="#f59e0b" stroke-width="1.2"/>
+<text x="490" y="424" text-anchor="middle" class="at" fill="#fde68a">stock</text>
+<line x1="480" y1="435" x2="468" y2="462" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3,2"/>
+
+<!-- [tiene_inv] -->
+<polygon points="600,480 646,480 623,462 623,498" fill="#0f1117" stroke="#f59e0b" stroke-width="2"/>
+<text x="623" y="484" text-anchor="middle" class="re" fill="#f59e0b">tiene</text>
+<line x1="510" y1="480" x2="600" y2="480" stroke="#f59e0b" stroke-width="1.8"/>
+<text x="528" y="473" class="ca" fill="#f59e0b">1</text>
+<line x1="646" y1="480" x2="700" y2="480" stroke="#f59e0b" stroke-width="1.8"/>
+<text x="680" y="473" class="ca" fill="#f59e0b">1</text>
+
+<!-- INVENTORY -->
+<rect x="700" y="462" width="150" height="36" rx="4" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+<text x="775" y="484" text-anchor="middle" class="en" fill="#000">INVENTORY</text>
+<ellipse cx="730" cy="420" rx="38" ry="15" fill="#1c1108" stroke="#f59e0b" stroke-width="1.2"/>
+<text x="730" y="424" text-anchor="middle" class="at" fill="#fde68a">stock</text>
+<line x1="740" y1="435" x2="748" y2="462" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3,2"/>
+<ellipse cx="840" cy="420" rx="42" ry="15" fill="#1c1108" stroke="#f59e0b" stroke-width="1.2"/>
+<text x="840" y="424" text-anchor="middle" class="at" fill="#fde68a">min_stock</text>
+<line x1="828" y1="435" x2="815" y2="462" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3,2"/>
+
+<!-- [aparece] PRODUCT─ORDER_ITEM -->
+<polygon points="940,480 986,480 963,462 963,498" fill="#0f1117" stroke="#10b981" stroke-width="2"/>
+<text x="963" y="484" text-anchor="middle" class="re" fill="#10b981">aparece</text>
+<line x1="510" y1="480" x2="510" y2="540" stroke="#10b981" stroke-width="1.8"/>
+<line x1="510" y1="540" x2="940" y2="480" stroke="#10b981" stroke-width="1.8"/>
+<text x="528" y="536" class="ca" fill="#10b981">1</text>
+<line x1="986" y1="480" x2="1040" y2="480" stroke="#10b981" stroke-width="1.8"/>
+<text x="1020" y="473" class="ca" fill="#10b981">N</text>
+
+<!-- ORDER_ITEM -->
+<rect x="1040" y="462" width="150" height="36" rx="4" fill="#10b981" stroke="#059669" stroke-width="2"/>
+<text x="1115" y="484" text-anchor="middle" class="en">ORDER_ITEM</text>
+<ellipse cx="1075" cy="420" rx="42" ry="15" fill="#022c22" stroke="#10b981" stroke-width="1.2"/>
+<text x="1075" y="424" text-anchor="middle" class="at" fill="#a7f3d0">quantity</text>
+<line x1="1082" y1="435" x2="1088" y2="462" stroke="#10b981" stroke-width="1" stroke-dasharray="3,2"/>
+<!-- ORDER─ORDER_ITEM vertical -->
+<line x1="1115" y1="138" x2="1115" y2="462" stroke="#10b981" stroke-width="1.8"/>
+<text x="1120" y="295" class="ca" fill="#10b981">1</text>
+<text x="1120" y="455" class="ca" fill="#10b981">N</text>
+
+<!-- PAYMENT -->
+<rect x="1380" y="462" width="150" height="36" rx="4" fill="#8b5cf6" stroke="#7c3aed" stroke-width="2"/>
+<text x="1455" y="484" text-anchor="middle" class="en">PAYMENT</text>
+<ellipse cx="1420" cy="420" rx="38" ry="15" fill="#1e0a3c" stroke="#8b5cf6" stroke-width="1.2"/>
+<text x="1420" y="424" text-anchor="middle" class="at" fill="#ddd6fe">amount</text>
+<line x1="1432" y1="435" x2="1440" y2="462" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="3,2"/>
+<!-- INVOICE─PAYMENT vertical -->
+<line x1="1455" y1="318" x2="1455" y2="462" stroke="#8b5cf6" stroke-width="1.8"/>
+<text x="1460" y="395" class="ca" fill="#8b5cf6">1</text>
+<text x="1460" y="455" class="ca" fill="#8b5cf6">N</text>
+
+<!-- ══ FILA 4 ══ -->
+<!-- CATEGORY -->
+<rect x="20" y="642" width="150" height="36" rx="4" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+<text x="95" y="664" text-anchor="middle" class="en" fill="#000">CATEGORY</text>
+<ellipse cx="60" cy="700" rx="38" ry="15" fill="#1c1108" stroke="#f59e0b" stroke-width="1.2"/>
+<text x="60" y="704" text-anchor="middle" class="at" fill="#fde68a">name</text>
+<line x1="68" y1="686" x2="76" y2="678" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3,2"/>
+<!-- CATEGORY─PRODUCT vertical -->
+<line x1="95" y1="678" x2="435" y2="498" stroke="#f59e0b" stroke-width="1.8"/>
+<text x="200" y="610" class="ca" fill="#f59e0b">1</text>
+<text x="390" y="510" class="ca" fill="#f59e0b">N</text>
+
+<!-- USER -->
+<rect x="360" y="642" width="150" height="36" rx="4" fill="#3b82f6" stroke="#2563eb" stroke-width="2"/>
+<text x="435" y="664" text-anchor="middle" class="en">USER</text>
+<ellipse cx="380" cy="700" rx="48" ry="15" fill="#0d1b3e" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="380" y="704" text-anchor="middle" class="at" fill="#bfdbfe">username</text>
+<line x1="392" y1="686" x2="402" y2="678" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,2"/>
+<ellipse cx="500" cy="700" rx="48" ry="15" fill="#0d1b3e" stroke="#3b82f6" stroke-width="1.2"/>
+<text x="500" y="704" text-anchor="middle" class="at" fill="#bfdbfe">user_type</text>
+<line x1="488" y1="686" x2="475" y2="678" stroke="#3b82f6" stroke-width="1" stroke-dasharray="3,2"/>
+<!-- USER─ORDER -->
+<line x1="435" y1="642" x2="1115" y2="498" stroke="#10b981" stroke-width="1.5" stroke-dasharray="5,3"/>
+<text x="750" y="558" class="ca" fill="#10b981">N</text>
+<!-- PERSON─USER vertical -->
+<line x1="435" y1="138" x2="435" y2="642" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="440" y="395" class="ca" fill="#3b82f6">1</text>
+<text x="440" y="635" class="ca" fill="#3b82f6">1</text>
+
+<!-- [tiene_ur] -->
+<polygon points="600,660 646,660 623,642 623,678" fill="#0f1117" stroke="#3b82f6" stroke-width="2"/>
+<text x="623" y="664" text-anchor="middle" class="re" fill="#3b82f6">tiene</text>
+<line x1="510" y1="660" x2="600" y2="660" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="528" y="653" class="ca" fill="#3b82f6">N</text>
+<line x1="646" y1="660" x2="700" y2="660" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="680" y="653" class="ca" fill="#3b82f6">M</text>
+
+<!-- USER_ROLE -->
+<rect x="700" y="642" width="150" height="36" rx="4" fill="#3b82f6" stroke="#2563eb" stroke-width="2"/>
+<text x="775" y="664" text-anchor="middle" class="en">USER_ROLE</text>
+<!-- ROLE─USER_ROLE -->
+<line x1="435" y1="318" x2="775" y2="642" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,2"/>
+<text x="580" y="460" class="ca" fill="#3b82f6">1</text>
+
+<!-- METHOD_PAYMENT -->
+<rect x="1380" y="642" width="150" height="36" rx="4" fill="#8b5cf6" stroke="#7c3aed" stroke-width="2"/>
+<text x="1455" y="664" text-anchor="middle" class="en">METHOD_PMT</text>
+<ellipse cx="1420" cy="700" rx="38" ry="15" fill="#1e0a3c" stroke="#8b5cf6" stroke-width="1.2"/>
+<text x="1420" y="704" text-anchor="middle" class="at" fill="#ddd6fe">name</text>
+<line x1="1432" y1="686" x2="1440" y2="678" stroke="#8b5cf6" stroke-width="1" stroke-dasharray="3,2"/>
+<!-- METHOD_PAYMENT─PAYMENT -->
+<line x1="1455" y1="642" x2="1455" y2="498" stroke="#8b5cf6" stroke-width="1.8"/>
+<text x="1460" y="560" class="ca" fill="#8b5cf6">1</text>
+<text x="1460" y="640" class="ca" fill="#8b5cf6">N</text>
+
+<!-- PRODUCT─INVOICE_ITEM -->
+<line x1="510" y1="462" x2="1455" y2="318" stroke="#8b5cf6" stroke-width="1.2" stroke-dasharray="4,2"/>
+<text x="990" y="375" class="ca" fill="#8b5cf6">N</text>
+
+<!-- ══ LEYENDA ══ -->
+<rect x="16" y="790" width="1568" height="112" rx="8" fill="#1e2533" stroke="#334155" stroke-width="1"/>
+<text x="800" y="812" text-anchor="middle" font-size="11" font-weight="bold" fill="#f1f5f9">Leyenda — Notación Chen</text>
+<line x1="16" y1="820" x2="1584" y2="820" stroke="#334155" stroke-width="1"/>
+<rect x="36" y="834" width="80" height="24" rx="3" fill="#3b82f6" stroke="#2563eb" stroke-width="2"/>
+<text x="76" y="850" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">ENTIDAD</text>
+<text x="125" y="850" font-size="10" fill="#94a3b8">= tabla de BD</text>
+<ellipse cx="250" cy="847" rx="42" ry="14" fill="#0d1b3e" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="250" y="851" text-anchor="middle" font-size="10" fill="#bfdbfe">atributo</text>
+<text x="300" y="851" font-size="10" fill="#94a3b8">= columna</text>
+<polygon points="430,833 476,847 430,861 384,847" fill="#0f1117" stroke="#94a3b8" stroke-width="1.5"/>
+<text x="430" y="851" text-anchor="middle" font-size="10" fill="#94a3b8">relacion</text>
+<text x="485" y="851" font-size="10" fill="#94a3b8">= vínculo entre tablas</text>
+<text x="700" y="851" font-size="10" fill="#94a3b8">1 = uno   N = muchos   N:M = muchos a muchos (tabla intermedia)</text>
+<text x="36" y="878" font-size="10" fill="#94a3b8">Tablas intermedias: USER_ROLE (User↔Role) · ROLE_MODULE (Role↔Module) · MODULE_VIEW (Module↔View)</text>
+<rect x="1000" y="830" width="12" height="12" rx="2" fill="#06b6d4"/><text x="1016" y="841" font-size="10" fill="#94a3b8">Parameter</text>
+<rect x="1100" y="830" width="12" height="12" rx="2" fill="#3b82f6"/><text x="1116" y="841" font-size="10" fill="#94a3b8">Security</text>
+<rect x="1190" y="830" width="12" height="12" rx="2" fill="#f59e0b"/><text x="1206" y="841" font-size="10" fill="#94a3b8">Inventory</text>
+<rect x="1290" y="830" width="12" height="12" rx="2" fill="#10b981"/><text x="1306" y="841" font-size="10" fill="#94a3b8">Sales</text>
+<rect x="1370" y="830" width="12" height="12" rx="2" fill="#8b5cf6"/><text x="1386" y="841" font-size="10" fill="#94a3b8">Billing</text>
+</svg>
+</div>
+
+<script>
+function sw(id,el){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

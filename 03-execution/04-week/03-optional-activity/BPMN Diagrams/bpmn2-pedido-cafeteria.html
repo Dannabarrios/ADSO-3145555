@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<title>BPMN — Pedido Cafetería</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0f1117;font-family:'Space Grotesk',sans-serif;padding:20px;}
+h1{text-align:center;color:#fff;font-size:1.4rem;margin-bottom:4px;}
+.sub{text-align:center;color:#64748b;font-size:.8rem;margin-bottom:16px;}
+.wrap{overflow-x:auto;background:#1e2533;border-radius:12px;border:1px solid #2d3748;padding:16px;}
+</style>
+</head>
+<body>
+<h1>BPMN — Proceso de Pedido y Facturación</h1>
+<p class="sub">// Cafeteria SENA · Módulos Sales + Billing + Inventory</p>
+<div class="wrap">
+<svg width="1560" height="720" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="arr"  markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#64748b"/></marker>
+  <marker id="arb"  markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#8b5cf6"/></marker>
+  <marker id="arg"  markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#10b981"/></marker>
+  <marker id="aro"  markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f59e0b"/></marker>
+  <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f87171"/></marker>
+  <style>
+    text{font-family:'Space Grotesk',sans-serif;}
+    .lane{font-size:11px;font-weight:700;}
+    .task{font-size:10px;fill:#e2e8f0;}
+    .gw{font-size:9px;fill:#fbbf24;}
+    .ev{font-size:9px;fill:#94a3b8;}
+    .lbl{font-size:9px;fill:#94a3b8;}
+    .anno{font-size:8px;fill:#64748b;}
+  </style>
+  <filter id="sh"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity=".4"/></filter>
+</defs>
+
+<rect width="1560" height="720" fill="#0f1117" rx="12"/>
+
+<!-- ══ POOL + LANES ══ -->
+<rect x="10" y="10" width="60" height="700" rx="4" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="40" y="365" text-anchor="middle" class="lane" fill="#93c5fd" transform="rotate(-90,40,365)">CAFETERÍA SENA</text>
+<rect x="10" y="10" width="1540" height="700" rx="4" fill="none" stroke="#334155" stroke-width="1.5"/>
+
+<!-- Lane CLIENTE -->
+<rect x="70" y="10" width="1480" height="155" fill="#0d1b3e" rx="0"/>
+<text x="82" y="30" class="lane" fill="#3b82f6">CLIENTE / APRENDIZ</text>
+<line x1="70" y1="165" x2="1550" y2="165" stroke="#334155" stroke-width="1.2"/>
+
+<!-- Lane SISTEMA / API -->
+<rect x="70" y="165" width="1480" height="155" fill="#1a0e2e" rx="0"/>
+<text x="82" y="183" class="lane" fill="#8b5cf6">SISTEMA / API</text>
+<line x1="70" y1="320" x2="1550" y2="320" stroke="#334155" stroke-width="1.2"/>
+
+<!-- Lane COCINA -->
+<rect x="70" y="320" width="1480" height="155" fill="#022c22" rx="0"/>
+<text x="82" y="338" class="lane" fill="#10b981">COCINA</text>
+<line x1="70" y1="475" x2="1550" y2="475" stroke="#334155" stroke-width="1.2"/>
+
+<!-- Lane CAJA / BILLING -->
+<rect x="70" y="475" width="1480" height="235" fill="#1a0e2e" rx="0"/>
+<text x="82" y="493" class="lane" fill="#8b5cf6">CAJA / FACTURACIÓN</text>
+
+<!-- ══════════════════════════════════
+     LANE CLIENTE
+══════════════════════════════════ -->
+<!-- START -->
+<circle cx="110" cy="92" r="20" fill="#3b82f6" stroke="#2563eb" stroke-width="2" filter="url(#sh)"/>
+<text x="110" y="97" text-anchor="middle" font-size="14" fill="#fff">▶</text>
+<text x="110" y="127" text-anchor="middle" class="ev">Inicio</text>
+
+<!-- Ver menú -->
+<line x1="130" y1="92" x2="160" y2="92" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="160" y="62" width="110" height="60" rx="6" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5" filter="url(#sh)"/>
+<text x="215" y="86" text-anchor="middle" class="task">Ver menú de</text>
+<text x="215" y="100" text-anchor="middle" class="task">productos</text>
+<text x="215" y="114" text-anchor="middle" class="task">disponibles</text>
+
+<!-- → GW stock? -->
+<line x1="270" y1="92" x2="320" y2="92" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<polygon points="340,92 370,67 400,92 370,117" fill="#1a1a2e" stroke="#fbbf24" stroke-width="2" filter="url(#sh)"/>
+<text x="370" y="96" text-anchor="middle" class="gw">¿Stock?</text>
+
+<!-- NO → aviso sin stock -->
+<line x1="370" y1="67" x2="370" y2="35" stroke="#f87171" stroke-width="1.5" marker-end="url(#arr2)"/>
+<rect x="320" y="14" width="110" height="36" rx="6" fill="#450a0a" stroke="#f87171" stroke-width="1.5"/>
+<text x="375" y="28" text-anchor="middle" class="task" fill="#fca5a5">Producto sin</text>
+<text x="375" y="42" text-anchor="middle" class="task" fill="#fca5a5">stock</text>
+<text x="408" y="62" class="lbl" fill="#f87171">No</text>
+
+<!-- SÍ → seleccionar productos -->
+<line x1="400" y1="92" x2="440" y2="92" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="415" y="84" class="lbl" fill="#10b981">Sí</text>
+<rect x="440" y="62" width="120" height="60" rx="6" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5" filter="url(#sh)"/>
+<text x="500" y="86" text-anchor="middle" class="task">Seleccionar</text>
+<text x="500" y="100" text-anchor="middle" class="task">productos y</text>
+<text x="500" y="114" text-anchor="middle" class="task">cantidades</text>
+
+<!-- → confirmar -->
+<line x1="560" y1="92" x2="600" y2="92" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="600" y="62" width="110" height="60" rx="6" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5" filter="url(#sh)"/>
+<text x="655" y="86" text-anchor="middle" class="task">Confirmar</text>
+<text x="655" y="100" text-anchor="middle" class="task">pedido y</text>
+<text x="655" y="114" text-anchor="middle" class="task">notas</text>
+
+<!-- → SISTEMA cross -->
+<line x1="655" y1="122" x2="655" y2="220" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arb)"/>
+
+<!-- ══════════════════════════════════
+     LANE SISTEMA
+══════════════════════════════════ -->
+<!-- Crear Order -->
+<rect x="600" y="200" width="120" height="60" rx="6" fill="#312e81" stroke="#8b5cf6" stroke-width="1.5" filter="url(#sh)"/>
+<text x="660" y="224" text-anchor="middle" class="task">Crear ORDER</text>
+<text x="660" y="238" text-anchor="middle" class="task">status=PENDING</text>
+
+<!-- → crear order items -->
+<line x1="720" y1="230" x2="760" y2="230" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#arb)"/>
+<rect x="760" y="200" width="120" height="60" rx="6" fill="#312e81" stroke="#8b5cf6" stroke-width="1.5" filter="url(#sh)"/>
+<text x="820" y="224" text-anchor="middle" class="task">Crear</text>
+<text x="820" y="238" text-anchor="middle" class="task">ORDER_ITEMs</text>
+<text x="820" y="252" text-anchor="middle" class="task">con subtotales</text>
+
+<!-- → actualizar inventario -->
+<line x1="880" y1="230" x2="920" y2="230" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#arb)"/>
+<rect x="920" y="200" width="120" height="60" rx="6" fill="#312e81" stroke="#8b5cf6" stroke-width="1.5" filter="url(#sh)"/>
+<text x="980" y="217" text-anchor="middle" class="task">Actualizar</text>
+<text x="980" y="231" text-anchor="middle" class="task">INVENTORY</text>
+<text x="980" y="245" text-anchor="middle" class="task">(restar stock)</text>
+<text x="980" y="259" text-anchor="middle" class="task" fill="#f59e0b">—</text>
+
+<!-- → notificar cocina cross -->
+<line x1="980" y1="260" x2="980" y2="375" stroke="#10b981" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arg)"/>
+
+<!-- ══════════════════════════════════
+     LANE COCINA
+══════════════════════════════════ -->
+<!-- Recibir pedido -->
+<rect x="920" y="355" width="120" height="60" rx="6" fill="#064e3b" stroke="#10b981" stroke-width="1.5" filter="url(#sh)"/>
+<text x="980" y="379" text-anchor="middle" class="task">Recibir</text>
+<text x="980" y="393" text-anchor="middle" class="task">pedido</text>
+<text x="980" y="407" text-anchor="middle" class="task">(IN_PREPARATION)</text>
+
+<!-- → preparar -->
+<line x1="1040" y1="385" x2="1080" y2="385" stroke="#10b981" stroke-width="1.5" marker-end="url(#arg)"/>
+<rect x="1080" y="355" width="110" height="60" rx="6" fill="#064e3b" stroke="#10b981" stroke-width="1.5" filter="url(#sh)"/>
+<text x="1135" y="379" text-anchor="middle" class="task">Preparar</text>
+<text x="1135" y="393" text-anchor="middle" class="task">productos del</text>
+<text x="1135" y="407" text-anchor="middle" class="task">pedido</text>
+
+<!-- → marcar listo -->
+<line x1="1190" y1="385" x2="1230" y2="385" stroke="#10b981" stroke-width="1.5" marker-end="url(#arg)"/>
+<rect x="1230" y="355" width="110" height="60" rx="6" fill="#064e3b" stroke="#10b981" stroke-width="1.5" filter="url(#sh)"/>
+<text x="1285" y="372" text-anchor="middle" class="task">Marcar pedido</text>
+<text x="1285" y="386" text-anchor="middle" class="task">como READY</text>
+
+<!-- → notificar cliente cross -->
+<line x1="1285" y1="355" x2="1285" y2="130" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arb)"/>
+<rect x="1230" y="62" width="110" height="60" rx="6" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5" filter="url(#sh)"/>
+<text x="1285" y="86" text-anchor="middle" class="task">Recibir</text>
+<text x="1285" y="100" text-anchor="middle" class="task">notificación:</text>
+<text x="1285" y="114" text-anchor="middle" class="task">pedido LISTO</text>
+
+<!-- → retirar pedido -->
+<line x1="1340" y1="92" x2="1380" y2="92" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="1380" y="62" width="110" height="60" rx="6" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5" filter="url(#sh)"/>
+<text x="1435" y="86" text-anchor="middle" class="task">Retirar</text>
+<text x="1435" y="100" text-anchor="middle" class="task">pedido en</text>
+<text x="1435" y="114" text-anchor="middle" class="task">caja</text>
+
+<!-- cocina → caja cross -->
+<line x1="1285" y1="415" x2="1285" y2="535" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arb)"/>
+
+<!-- ══════════════════════════════════
+     LANE CAJA / BILLING
+══════════════════════════════════ -->
+<!-- Generar invoice -->
+<rect x="1230" y="510" width="120" height="60" rx="6" fill="#312e81" stroke="#8b5cf6" stroke-width="1.5" filter="url(#sh)"/>
+<text x="1290" y="534" text-anchor="middle" class="task">Generar</text>
+<text x="1290" y="548" text-anchor="middle" class="task">INVOICE</text>
+<text x="1290" y="562" text-anchor="middle" class="task">con IVA</text>
+
+<!-- → seleccionar metodo pago -->
+<line x1="1290" y1="510" x2="1290" y2="490" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#arb)"/>
+<!-- subir a cliente -->
+<line x1="1380" y1="122" x2="1380" y2="540" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5,3"/>
+<rect x="1120" y="510" width="110" height="60" rx="6" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5" filter="url(#sh)"/>
+<text x="1175" y="534" text-anchor="middle" class="task">Cliente elige</text>
+<text x="1175" y="548" text-anchor="middle" class="task">METHOD_</text>
+<text x="1175" y="562" text-anchor="middle" class="task">PAYMENT</text>
+<line x1="1380" y1="540" x2="1230" y2="540" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#arb)"/>
+
+<!-- → registrar pago -->
+<line x1="1120" y1="540" x2="1080" y2="540" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#arb)"/>
+<rect x="960" y="510" width="120" height="60" rx="6" fill="#312e81" stroke="#8b5cf6" stroke-width="1.5" filter="url(#sh)"/>
+<text x="1020" y="534" text-anchor="middle" class="task">Registrar</text>
+<text x="1020" y="548" text-anchor="middle" class="task">PAYMENT</text>
+<text x="1020" y="562" text-anchor="middle" class="task">en sistema</text>
+
+<!-- GW pago OK? -->
+<polygon points="840,540 870,515 900,540 870,565" fill="#1a1a2e" stroke="#fbbf24" stroke-width="2" filter="url(#sh)"/>
+<text x="870" y="544" text-anchor="middle" class="gw">¿Pago?</text>
+<line x1="960" y1="540" x2="900" y2="540" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#arb)"/>
+
+<!-- SÍ → marcar DELIVERED -->
+<line x1="840" y1="540" x2="780" y2="540" stroke="#10b981" stroke-width="1.5" marker-end="url(#arg)"/>
+<text x="826" y="532" class="lbl" fill="#10b981">Sí</text>
+<rect x="650" y="510" width="130" height="60" rx="6" fill="#064e3b" stroke="#10b981" stroke-width="1.5" filter="url(#sh)"/>
+<text x="715" y="534" text-anchor="middle" class="task">Marcar ORDER</text>
+<text x="715" y="548" text-anchor="middle" class="task">como DELIVERED</text>
+<text x="715" y="562" text-anchor="middle" class="task">+ puntos loyalty</text>
+
+<!-- NO → error pago -->
+<line x1="870" y1="565" x2="870" y2="620" stroke="#f87171" stroke-width="1.5" marker-end="url(#arr2)"/>
+<text x="877" y="600" class="lbl" fill="#f87171">No</text>
+<rect x="820" y="622" width="100" height="40" rx="6" fill="#450a0a" stroke="#f87171" stroke-width="1.5"/>
+<text x="870" y="638" text-anchor="middle" class="task" fill="#fca5a5">Error / reintentar</text>
+<text x="870" y="652" text-anchor="middle" class="task" fill="#fca5a5">pago</text>
+
+<!-- → END -->
+<circle cx="560" cy="540" r="20" fill="#0f1117" stroke="#10b981" stroke-width="3" filter="url(#sh)"/>
+<circle cx="560" cy="540" r="13" fill="#10b981"/>
+<text x="560" y="575" text-anchor="middle" class="ev">Fin</text>
+<line x1="650" y1="540" x2="580" y2="540" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- Anotaciones intermedias -->
+<text x="920" y="250" class="anno">Verifica disponibilidad</text>
+<text x="920" y="262" class="anno">actualiza INVENTORY</text>
+<line x1="920" y1="248" x2="912" y2="240" stroke="#64748b" stroke-width="1" stroke-dasharray="2,2"/>
+
+<!-- ══ LEYENDA ══ -->
+<rect x="80" y="688" width="1460" height="26" rx="6" fill="#1e2533" stroke="#334155" stroke-width="1"/>
+<circle cx="110" cy="701" r="8" fill="#3b82f6" stroke="#2563eb" stroke-width="1.5"/>
+<text x="124" y="705" font-size="9" fill="#94a3b8">Inicio/Fin</text>
+<rect x="195" y="693" width="40" height="16" rx="3" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1"/>
+<text x="215" y="705" text-anchor="middle" font-size="9" fill="#94a3b8">Tarea</text>
+<polygon points="290,701 304,693 318,701 304,709" fill="#1a1a2e" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="304" y="705" text-anchor="middle" font-size="8" fill="#fbbf24">?</text>
+<text x="325" y="705" font-size="9" fill="#94a3b8">Gateway</text>
+<line x1="410" y1="701" x2="440" y2="701" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arb)"/>
+<text x="448" y="705" font-size="9" fill="#94a3b8">Flujo entre capas</text>
+<line x1="590" y1="701" x2="620" y2="701" stroke="#f87171" stroke-width="1.5" marker-end="url(#arr2)"/>
+<text x="628" y="705" font-size="9" fill="#94a3b8">Error</text>
+<text x="700" y="705" font-size="9" fill="#94a3b8">PENDING→IN_PREPARATION→READY→DELIVERED</text>
+</svg>
+</div>
+</body>
+</html>

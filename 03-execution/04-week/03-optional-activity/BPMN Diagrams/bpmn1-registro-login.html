@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<title>BPMN — Registro y Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0f1117;font-family:'Space Grotesk',sans-serif;padding:20px;}
+h1{text-align:center;color:#fff;font-size:1.4rem;margin-bottom:4px;}
+.sub{text-align:center;color:#64748b;font-size:.8rem;margin-bottom:16px;}
+.wrap{overflow-x:auto;background:#1e2533;border-radius:12px;border:1px solid #2d3748;padding:16px;}
+</style>
+</head>
+<body>
+<h1>BPMN — Registro y Login de Usuarios</h1>
+<p class="sub">// Cafeteria SENA · Módulo Security</p>
+<div class="wrap">
+<svg width="1520" height="620" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L8,3 z" fill="#64748b"/>
+  </marker>
+  <marker id="arb" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L8,3 z" fill="#3b82f6"/>
+  </marker>
+  <marker id="arg" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L8,3 z" fill="#10b981"/>
+  </marker>
+  <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L8,3 z" fill="#f87171"/>
+  </marker>
+  <style>
+    text{font-family:'Space Grotesk',sans-serif;}
+    .lane{font-size:11px;font-weight:700;}
+    .task{font-size:10px;fill:#e2e8f0;}
+    .gw{font-size:9px;fill:#fbbf24;}
+    .ev{font-size:9px;fill:#94a3b8;}
+    .lbl{font-size:9px;fill:#94a3b8;}
+  </style>
+  <filter id="sh">
+    <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity=".4"/>
+  </filter>
+</defs>
+
+<rect width="1520" height="620" fill="#0f1117" rx="12"/>
+
+<!-- ══ POOLS ══ -->
+<!-- USUARIO pool -->
+<rect x="10" y="10" width="60" height="590" rx="4" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="40" y="310" text-anchor="middle" class="lane" fill="#93c5fd" transform="rotate(-90,40,310)">USUARIO</text>
+<!-- SISTEMA pool -->
+<rect x="10" y="10" width="1500" height="590" rx="4" fill="none" stroke="#334155" stroke-width="1.5"/>
+
+<!-- ── LANE 1: USUARIO (y=10→210) ── -->
+<rect x="70" y="10" width="1440" height="200" fill="#0d1b3e" rx="0"/>
+<text x="80" y="30" class="lane" fill="#3b82f6">USUARIO</text>
+<line x1="70" y1="210" x2="1510" y2="210" stroke="#334155" stroke-width="1"/>
+
+<!-- ── LANE 2: FRONTEND/API (y=210→410) ── -->
+<rect x="70" y="210" width="1440" height="200" fill="#0f172a" rx="0"/>
+<text x="80" y="230" class="lane" fill="#8b5cf6">FRONTEND / API</text>
+<line x1="70" y1="410" x2="1510" y2="410" stroke="#334155" stroke-width="1"/>
+
+<!-- ── LANE 3: BASE DE DATOS (y=410→600) ── -->
+<rect x="70" y="410" width="1440" height="200" fill="#0a0f1a" rx="0"/>
+<text x="80" y="430" class="lane" fill="#10b981">BASE DE DATOS</text>
+
+<!-- ══════════════════════════════════════
+     FLUJO REGISTRO
+═══════════════════════════════════════ -->
+
+<!-- START evento -->
+<circle cx="120" cy="110" r="20" fill="#10b981" stroke="#059669" stroke-width="2" filter="url(#sh)"/>
+<text x="120" y="115" text-anchor="middle" font-size="14" fill="#fff">▶</text>
+<text x="120" y="145" text-anchor="middle" class="ev">Inicio</text>
+<text x="120" y="157" text-anchor="middle" class="ev">Registro</text>
+
+<!-- → Completar formulario -->
+<line x1="140" y1="110" x2="175" y2="110" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="175" y="80" width="120" height="60" rx="6" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5" filter="url(#sh)"/>
+<text x="235" y="106" text-anchor="middle" class="task">Completar</text>
+<text x="235" y="120" text-anchor="middle" class="task">formulario de</text>
+<text x="235" y="134" text-anchor="middle" class="task">registro</text>
+
+<!-- → Enviar datos -->
+<line x1="295" y1="110" x2="330" y2="110" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<!-- cruzar a FRONTEND -->
+<line x1="360" y1="110" x2="360" y2="260" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arb)"/>
+<rect x="320" y="80" width="80" height="40" rx="6" fill="#312e81" stroke="#8b5cf6" stroke-width="1.5"/>
+<text x="360" y="97" text-anchor="middle" class="task">Enviar</text>
+<text x="360" y="111" text-anchor="middle" class="task">datos</text>
+
+<!-- FRONTEND: Validar datos -->
+<rect x="420" y="240" width="120" height="60" rx="6" fill="#312e81" stroke="#8b5cf6" stroke-width="1.5" filter="url(#sh)"/>
+<text x="480" y="266" text-anchor="middle" class="task">Validar datos</text>
+<text x="480" y="280" text-anchor="middle" class="task">del formulario</text>
+<line x1="360" y1="280" x2="420" y2="280" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#arb)"/>
+
+<!-- GW: ¿Válido? -->
+<polygon points="570,280 600,255 630,280 600,305" fill="#1a1a2e" stroke="#fbbf24" stroke-width="2" filter="url(#sh)"/>
+<text x="600" y="284" text-anchor="middle" class="gw">¿Válido?</text>
+<line x1="540" y1="280" x2="570" y2="280" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#arb)"/>
+
+<!-- NO → error mensaje -->
+<line x1="600" y1="255" x2="600" y2="190" stroke="#f87171" stroke-width="1.5" marker-end="url(#arr2)"/>
+<rect x="555" y="155" width="90" height="40" rx="6" fill="#450a0a" stroke="#f87171" stroke-width="1.5"/>
+<text x="600" y="171" text-anchor="middle" class="task" fill="#fca5a5">Mostrar error</text>
+<text x="600" y="185" text-anchor="middle" class="task" fill="#fca5a5">de validación</text>
+<text x="620" y="225" class="lbl" fill="#f87171">No</text>
+<!-- flecha regreso usuario -->
+<line x1="600" y1="155" x2="600" y2="120" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arr2)"/>
+<line x1="600" y1="120" x2="295" y2="110" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4,2"/>
+
+<!-- SÍ → hashear password -->
+<line x1="630" y1="280" x2="680" y2="280" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#arb)"/>
+<text x="648" y="273" class="lbl" fill="#10b981">Sí</text>
+<rect x="680" y="250" width="120" height="60" rx="6" fill="#312e81" stroke="#8b5cf6" stroke-width="1.5" filter="url(#sh)"/>
+<text x="740" y="276" text-anchor="middle" class="task">Hashear</text>
+<text x="740" y="290" text-anchor="middle" class="task">contraseña</text>
+<text x="740" y="304" text-anchor="middle" class="task">(BCrypt)</text>
+
+<!-- → guardar BD -->
+<line x1="800" y1="280" x2="800" y2="460" stroke="#10b981" stroke-width="1.5" marker-end="url(#arg)"/>
+<rect x="750" y="460" width="120" height="60" rx="6" fill="#022c22" stroke="#10b981" stroke-width="1.5" filter="url(#sh)"/>
+<text x="810" y="486" text-anchor="middle" class="task">Guardar Person</text>
+<text x="810" y="500" text-anchor="middle" class="task">+ User en BD</text>
+
+<!-- → asignar rol default -->
+<line x1="870" y1="490" x2="920" y2="490" stroke="#10b981" stroke-width="1.5" marker-end="url(#arg)"/>
+<rect x="920" y="460" width="120" height="60" rx="6" fill="#022c22" stroke="#10b981" stroke-width="1.5" filter="url(#sh)"/>
+<text x="980" y="486" text-anchor="middle" class="task">Asignar rol</text>
+<text x="980" y="500" text-anchor="middle" class="task">APRENDIZ por</text>
+<text x="980" y="514" text-anchor="middle" class="task">defecto</text>
+
+<!-- → respuesta -->
+<line x1="1040" y1="490" x2="1040" y2="280" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arb)"/>
+<rect x="1000" y="250" width="120" height="60" rx="6" fill="#312e81" stroke="#8b5cf6" stroke-width="1.5" filter="url(#sh)"/>
+<text x="1060" y="276" text-anchor="middle" class="task">Enviar respuesta</text>
+<text x="1060" y="290" text-anchor="middle" class="task">201 Created</text>
+
+<!-- → notificar usuario -->
+<line x1="1120" y1="280" x2="1120" y2="110" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arb)"/>
+<rect x="1080" y="80" width="120" height="60" rx="6" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5" filter="url(#sh)"/>
+<text x="1140" y="106" text-anchor="middle" class="task">Recibir</text>
+<text x="1140" y="120" text-anchor="middle" class="task">confirmación</text>
+<text x="1140" y="134" text-anchor="middle" class="task">de registro</text>
+<line x1="1060" y1="280" x2="1080" y2="280" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#arb)"/>
+
+<!-- END REGISTRO -->
+<circle cx="1260" cy="110" r="20" fill="#0f1117" stroke="#10b981" stroke-width="3" filter="url(#sh)"/>
+<circle cx="1260" cy="110" r="13" fill="#10b981"/>
+<text x="1260" y="145" text-anchor="middle" class="ev">Fin</text>
+<text x="1260" y="157" text-anchor="middle" class="ev">Registro</text>
+<line x1="1200" y1="110" x2="1239" y2="110" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+
+<!-- ══════════════════════════════════════
+     FLUJO LOGIN (paralelo en y superior, otra columna)
+     Usamos zona x=1280+ para el login resumido
+═══════════════════════════════════════ -->
+<!-- Separador vertical -->
+<line x1="1290" y1="20" x2="1290" y2="600" stroke="#334155" stroke-width="1" stroke-dasharray="6,4"/>
+<text x="1400" y="25" text-anchor="middle" font-size="10" font-weight="bold" fill="#fbbf24">FLUJO LOGIN</text>
+
+<!-- START LOGIN -->
+<circle cx="1320" cy="110" r="20" fill="#f59e0b" stroke="#d97706" stroke-width="2" filter="url(#sh)"/>
+<text x="1320" y="115" text-anchor="middle" font-size="14" fill="#fff">▶</text>
+<text x="1320" y="145" text-anchor="middle" class="ev">Inicio</text>
+<text x="1320" y="157" text-anchor="middle" class="ev">Login</text>
+
+<!-- → ingresar credenciales -->
+<line x1="1340" y1="110" x2="1365" y2="110" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<rect x="1365" y="80" width="110" height="60" rx="6" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5" filter="url(#sh)"/>
+<text x="1420" y="103" text-anchor="middle" class="task">Ingresar</text>
+<text x="1420" y="117" text-anchor="middle" class="task">usuario y</text>
+<text x="1420" y="131" text-anchor="middle" class="task">contraseña</text>
+
+<!-- → validar -->
+<line x1="1420" y1="140" x2="1420" y2="260" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arb)"/>
+<rect x="1370" y="255" width="110" height="50" rx="6" fill="#312e81" stroke="#8b5cf6" stroke-width="1.5" filter="url(#sh)"/>
+<text x="1425" y="276" text-anchor="middle" class="task">Verificar hash</text>
+<text x="1425" y="290" text-anchor="middle" class="task">BCrypt</text>
+
+<!-- → BD consulta -->
+<line x1="1425" y1="305" x2="1425" y2="460" stroke="#10b981" stroke-width="1.5" marker-end="url(#arg)"/>
+<rect x="1375" y="455" width="110" height="50" rx="6" fill="#022c22" stroke="#10b981" stroke-width="1.5" filter="url(#sh)"/>
+<text x="1430" y="476" text-anchor="middle" class="task">Consultar User</text>
+<text x="1430" y="490" text-anchor="middle" class="task">+ Roles en BD</text>
+
+<!-- GW credenciales -->
+<polygon points="1425,395 1455,370 1485,395 1455,420" fill="#1a1a2e" stroke="#fbbf24" stroke-width="2" filter="url(#sh)"/>
+<text x="1455" y="399" text-anchor="middle" class="gw">¿OK?</text>
+<line x1="1425" y1="505" x2="1455" y2="420" stroke="#10b981" stroke-width="1.5" marker-end="url(#arg)"/>
+
+<!-- SÍ → JWT -->
+<line x1="1455" y1="370" x2="1455" y2="280" stroke="#10b981" stroke-width="1.5" marker-end="url(#arg)"/>
+<text x="1462" y="330" class="lbl" fill="#10b981">Sí</text>
+<rect x="1370" y="195" width="110" height="50" rx="6" fill="#022c22" stroke="#10b981" stroke-width="1.5" filter="url(#sh)"/>
+<text x="1425" y="216" text-anchor="middle" class="task">Generar</text>
+<text x="1425" y="230" text-anchor="middle" class="task">JWT Token</text>
+<line x1="1455" y1="255" x2="1455" y2="245" stroke="#10b981" stroke-width="1.5" marker-end="url(#arg)"/>
+
+<!-- → respuesta -->
+<line x1="1425" y1="195" x2="1425" y2="140" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arb)"/>
+
+<!-- END LOGIN -->
+<circle cx="1490" cy="110" r="20" fill="#0f1117" stroke="#f59e0b" stroke-width="3" filter="url(#sh)"/>
+<circle cx="1490" cy="110" r="13" fill="#f59e0b"/>
+<text x="1490" y="145" text-anchor="middle" class="ev">Fin Login</text>
+
+<!-- ══ LEYENDA ══ -->
+<rect x="80" y="565" width="1420" height="44" rx="6" fill="#1e2533" stroke="#334155" stroke-width="1"/>
+<circle cx="110" cy="587" r="10" fill="#10b981" stroke="#059669" stroke-width="1.5"/>
+<text x="126" y="591" font-size="10" fill="#94a3b8">Evento inicio/fin</text>
+<rect x="220" y="578" width="50" height="20" rx="3" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="245" y="591" text-anchor="middle" font-size="10" fill="#94a3b8">Tarea</text>
+<polygon points="330,588 350,578 370,588 350,598" fill="#1a1a2e" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="350" y="592" text-anchor="middle" font-size="9" fill="#fbbf24">X</text>
+<text x="380" y="591" font-size="10" fill="#94a3b8">Gateway (decisión)</text>
+<line x1="510" y1="587" x2="550" y2="587" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+<text x="560" y="591" font-size="10" fill="#94a3b8">Flujo secuencial</text>
+<line x1="680" y1="587" x2="720" y2="587" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arb)"/>
+<text x="730" y="591" font-size="10" fill="#94a3b8">Flujo entre capas</text>
+<line x1="860" y1="587" x2="900" y2="587" stroke="#f87171" stroke-width="1.5" marker-end="url(#arr2)"/>
+<text x="910" y="591" font-size="10" fill="#94a3b8">Flujo de error</text>
+</svg>
+</div>
+</body>
+</html>
