@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+    <!-- 1. Estructura de tablas (DDL) -->
+    <include file="changelogs/ddl/001-create-autores.xml"        relativeToChangelogFile="true"/>
+    <include file="changelogs/ddl/002-create-editoriales.xml"    relativeToChangelogFile="true"/>
+    <include file="changelogs/ddl/003-create-categorias.xml"     relativeToChangelogFile="true"/>
+    <include file="changelogs/ddl/004-create-proveedores.xml"    relativeToChangelogFile="true"/>
+    <include file="changelogs/ddl/005-create-libros.xml"         relativeToChangelogFile="true"/>
+    <include file="changelogs/ddl/006-create-clientes.xml"       relativeToChangelogFile="true"/>
+    <include file="changelogs/ddl/007-create-empleados.xml"      relativeToChangelogFile="true"/>
+    <include file="changelogs/ddl/008-create-ventas.xml"         relativeToChangelogFile="true"/>
+    <include file="changelogs/ddl/009-create-detalle-ventas.xml" relativeToChangelogFile="true"/>
+    <include file="changelogs/ddl/010-create-inventario.xml"     relativeToChangelogFile="true"/>
+    <!-- 2. Índices -->
+    <include file="changelogs/indexes/001-indexes.xml"           relativeToChangelogFile="true"/>
+    <!-- 3. Vistas -->
+    <include file="changelogs/views/001-views.xml"               relativeToChangelogFile="true"/>
+    <!-- 4. Datos iniciales (DML) -->
+    <include file="changelogs/dml/001-seed-autores.xml"          relativeToChangelogFile="true"/>
+    <include file="changelogs/dml/002-seed-editoriales.xml"      relativeToChangelogFile="true"/>
+    <include file="changelogs/dml/003-seed-categorias.xml"       relativeToChangelogFile="true"/>
+    <include file="changelogs/dml/004-seed-proveedores.xml"      relativeToChangelogFile="true"/>
+    <include file="changelogs/dml/005-seed-libros.xml"           relativeToChangelogFile="true"/>
+    <include file="changelogs/dml/006-seed-clientes.xml"         relativeToChangelogFile="true"/>
+    <include file="changelogs/dml/007-seed-empleados.xml"        relativeToChangelogFile="true"/>
+    <include file="changelogs/dml/008-seed-ventas.xml"           relativeToChangelogFile="true"/>
+    <include file="changelogs/dml/009-seed-detalle-ventas.xml"   relativeToChangelogFile="true"/>
+    <include file="changelogs/dml/010-seed-inventario.xml"       relativeToChangelogFile="true"/>
+</databaseChangeLog>

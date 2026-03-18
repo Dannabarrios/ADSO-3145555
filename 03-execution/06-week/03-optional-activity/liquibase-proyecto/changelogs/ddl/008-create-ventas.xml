@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="008" author="danna">
+        <createTable tableName="ventas">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="id_cliente" type="INTEGER">
+                <constraints nullable="false" foreignKeyName="fk_ventas_cliente" references="clientes(id)"/>
+            </column>
+            <column name="id_empleado" type="INTEGER">
+                <constraints nullable="false" foreignKeyName="fk_ventas_empleado" references="empleados(id)"/>
+            </column>
+            <column name="fecha" type="TIMESTAMP" defaultValueComputed="NOW()"/>
+            <column name="total" type="NUMERIC(12,2)" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="estado" type="VARCHAR(20)" defaultValue="pendiente">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

@@ -3,19 +3,22 @@
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
 
-    <changeSet id="1" author="danna">
-        <createTable tableName="clientes">
+    <changeSet id="001" author="danna">
+        <createTable tableName="autores">
             <column name="id" type="SERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="nombre" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>
-            <column name="email" type="VARCHAR(150)">
-                <constraints nullable="false" unique="true"/>
+            <column name="apellido" type="VARCHAR(100)">
+                <constraints nullable="false"/>
             </column>
+            <column name="nacionalidad" type="VARCHAR(80)"/>
+            <column name="fecha_nacimiento" type="DATE"/>
+            <column name="creado_en" type="TIMESTAMP" defaultValueComputed="NOW()"/>
         </createTable>
     </changeSet>
 

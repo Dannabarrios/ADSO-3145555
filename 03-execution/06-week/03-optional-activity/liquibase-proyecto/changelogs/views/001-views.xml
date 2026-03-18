@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="view-001" author="danna">
+        <createView viewName="v_catalogo_libros">
+            SELECT l.id, l.titulo, l.isbn, l.precio,
+                   a.nombre || ' ' || a.apellido AS autor,
+                   e.nombre AS editorial,
+                   c.nombre AS categoria
+            FROM libros l
+            JOIN autores    a ON a.id = l.id_autor
+            JOIN editoriales e ON e.id = l.id_editorial
+            JOIN categorias  c ON c.id = l.id_categoria
+        </createView>
+    </changeSet>
+
+    <changeSet id="view-002" author="danna">
+        <createView viewName="v_resumen_ventas">
+            SELECT v.id AS venta_id,
+                   cl.nombre || ' ' || cl.apellido AS cliente,
+                   em.nombre || ' ' || em.apellido AS empleado,
+                   v.fecha, v.total, v.estado
+            FROM ventas v
+            JOIN clientes  cl ON cl.id = v.id_cliente
+            JOIN empleados em ON em.id = v.id_empleado
+        </createView>
+    </changeSet>
+
+    <changeSet id="view-003" author="danna">
+        <createView viewName="v_inventario_bajo">
+            SELECT l.titulo, i.stock, i.stock_minimo,
+                   p.nombre AS proveedor
+            FROM inventario i
+            JOIN libros     l ON l.id = i.id_libro
+            JOIN proveedores p ON p.id = i.id_proveedor
+            WHERE i.stock &lt;= i.stock_minimo
+        </createView>
+    </changeSet>
+
+</databaseChangeLog>

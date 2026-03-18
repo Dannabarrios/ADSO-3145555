@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="dml-010" author="danna">
+        <insert tableName="inventario">
+            <column name="id_libro" valueNumeric="1"/>
+            <column name="id_proveedor" valueNumeric="1"/>
+            <column name="stock" valueNumeric="20"/>
+            <column name="stock_minimo" valueNumeric="5"/>
+        </insert>
+        <insert tableName="inventario">
+            <column name="id_libro" valueNumeric="2"/>
+            <column name="id_proveedor" valueNumeric="1"/>
+            <column name="stock" valueNumeric="15"/>
+            <column name="stock_minimo" valueNumeric="5"/>
+        </insert>
+        <insert tableName="inventario">
+            <column name="id_libro" valueNumeric="3"/>
+            <column name="id_proveedor" valueNumeric="2"/>
+            <column name="stock" valueNumeric="4"/>
+            <column name="stock_minimo" valueNumeric="5"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="dml-006" author="danna">
+        <insert tableName="clientes">
+            <column name="nombre" value="Sofia"/>
+            <column name="apellido" value="Ramirez"/>
+            <column name="email" value="sofia@correo.com"/>
+            <column name="telefono" value="3001112233"/>
+            <column name="ciudad" value="Bogota"/>
+        </insert>
+        <insert tableName="clientes">
+            <column name="nombre" value="Andres"/>
+            <column name="apellido" value="Mora"/>
+            <column name="email" value="andres@correo.com"/>
+            <column name="telefono" value="3104445566"/>
+            <column name="ciudad" value="Cali"/>
+        </insert>
+        <insert tableName="clientes">
+            <column name="nombre" value="Valentina"/>
+            <column name="apellido" value="Castro"/>
+            <column name="email" value="valentina@correo.com"/>
+            <column name="telefono" value="3207778899"/>
+            <column name="ciudad" value="Medellin"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

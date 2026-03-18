@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="005" author="danna">
+        <createTable tableName="libros">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="titulo" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="isbn" type="VARCHAR(20)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="precio" type="NUMERIC(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="anio_publicacion" type="INTEGER"/>
+            <column name="id_autor" type="INTEGER">
+                <constraints nullable="false" foreignKeyName="fk_libros_autor" references="autores(id)"/>
+            </column>
+            <column name="id_editorial" type="INTEGER">
+                <constraints nullable="false" foreignKeyName="fk_libros_editorial" references="editoriales(id)"/>
+            </column>
+            <column name="id_categoria" type="INTEGER">
+                <constraints nullable="false" foreignKeyName="fk_libros_categoria" references="categorias(id)"/>
+            </column>
+            <column name="creado_en" type="TIMESTAMP" defaultValueComputed="NOW()"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

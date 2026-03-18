@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="dml-003" author="danna">
+        <insert tableName="categorias">
+            <column name="nombre" value="Novela"/>
+            <column name="descripcion" value="Obras de ficcion narrativa extensa"/>
+        </insert>
+        <insert tableName="categorias">
+            <column name="nombre" value="Ciencia Ficcion"/>
+            <column name="descripcion" value="Obras basadas en avances cientificos"/>
+        </insert>
+        <insert tableName="categorias">
+            <column name="nombre" value="Historia"/>
+            <column name="descripcion" value="Obras sobre hechos historicos"/>
+        </insert>
+        <insert tableName="categorias">
+            <column name="nombre" value="Poesia"/>
+            <column name="descripcion" value="Obras en verso"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

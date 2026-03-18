@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="dml-005" author="danna">
+        <insert tableName="libros">
+            <column name="titulo" value="Cien Anos de Soledad"/>
+            <column name="isbn" value="978-0-06-088328-7"/>
+            <column name="precio" valueNumeric="45000"/>
+            <column name="anio_publicacion" valueNumeric="1967"/>
+            <column name="id_autor" valueNumeric="1"/>
+            <column name="id_editorial" valueNumeric="1"/>
+            <column name="id_categoria" valueNumeric="1"/>
+        </insert>
+        <insert tableName="libros">
+            <column name="titulo" value="La Casa de los Espiritus"/>
+            <column name="isbn" value="978-0-14-243674-3"/>
+            <column name="precio" valueNumeric="38000"/>
+            <column name="anio_publicacion" valueNumeric="1982"/>
+            <column name="id_autor" valueNumeric="2"/>
+            <column name="id_editorial" valueNumeric="2"/>
+            <column name="id_categoria" valueNumeric="1"/>
+        </insert>
+        <insert tableName="libros">
+            <column name="titulo" value="Ficciones"/>
+            <column name="isbn" value="978-0-8021-3010-6"/>
+            <column name="precio" valueNumeric="32000"/>
+            <column name="anio_publicacion" valueNumeric="1944"/>
+            <column name="id_autor" valueNumeric="3"/>
+            <column name="id_editorial" valueNumeric="3"/>
+            <column name="id_categoria" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

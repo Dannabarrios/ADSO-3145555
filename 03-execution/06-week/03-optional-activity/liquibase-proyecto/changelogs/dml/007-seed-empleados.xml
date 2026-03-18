@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="dml-007" author="danna">
+        <insert tableName="empleados">
+            <column name="nombre" value="Laura"/>
+            <column name="apellido" value="Perez"/>
+            <column name="cargo" value="Cajera"/>
+            <column name="email" value="laura@libreria.com"/>
+            <column name="salario" valueNumeric="1800000"/>
+        </insert>
+        <insert tableName="empleados">
+            <column name="nombre" value="Juan"/>
+            <column name="apellido" value="Gomez"/>
+            <column name="cargo" value="Asesor"/>
+            <column name="email" value="juan@libreria.com"/>
+            <column name="salario" valueNumeric="1600000"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

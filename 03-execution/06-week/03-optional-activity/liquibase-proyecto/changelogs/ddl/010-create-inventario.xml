@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="010" author="danna">
+        <createTable tableName="inventario">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="id_libro" type="INTEGER">
+                <constraints nullable="false" foreignKeyName="fk_inventario_libro" references="libros(id)"/>
+            </column>
+            <column name="id_proveedor" type="INTEGER">
+                <constraints nullable="false" foreignKeyName="fk_inventario_proveedor" references="proveedores(id)"/>
+            </column>
+            <column name="stock" type="INTEGER" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stock_minimo" type="INTEGER" defaultValueNumeric="5">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ultima_actualizacion" type="TIMESTAMP" defaultValueComputed="NOW()"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

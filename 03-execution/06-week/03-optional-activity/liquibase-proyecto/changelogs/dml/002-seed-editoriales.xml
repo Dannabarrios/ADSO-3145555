@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="dml-002" author="danna">
+        <insert tableName="editoriales">
+            <column name="nombre" value="Planeta"/>
+            <column name="pais" value="Colombia"/>
+            <column name="email" value="contacto@planeta.com"/>
+        </insert>
+        <insert tableName="editoriales">
+            <column name="nombre" value="Alfaguara"/>
+            <column name="pais" value="España"/>
+            <column name="email" value="contacto@alfaguara.com"/>
+        </insert>
+        <insert tableName="editoriales">
+            <column name="nombre" value="Norma"/>
+            <column name="pais" value="Colombia"/>
+            <column name="email" value="contacto@norma.com"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="idx-001" author="danna">
+        <createIndex indexName="idx_libros_autor" tableName="libros">
+            <column name="id_autor"/>
+        </createIndex>
+        <createIndex indexName="idx_libros_categoria" tableName="libros">
+            <column name="id_categoria"/>
+        </createIndex>
+        <createIndex indexName="idx_libros_editorial" tableName="libros">
+            <column name="id_editorial"/>
+        </createIndex>
+        <createIndex indexName="idx_ventas_cliente" tableName="ventas">
+            <column name="id_cliente"/>
+        </createIndex>
+        <createIndex indexName="idx_ventas_empleado" tableName="ventas">
+            <column name="id_empleado"/>
+        </createIndex>
+        <createIndex indexName="idx_inventario_libro" tableName="inventario">
+            <column name="id_libro"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
